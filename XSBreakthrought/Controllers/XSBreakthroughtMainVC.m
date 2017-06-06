@@ -11,7 +11,6 @@
 #import "XSBreakthroughtModel.h"
 #import "XSBIntroduceView.h"
 #import "XSBreakthroughtManager.h"
-#import "XSBreakthroughtUtil.h"
 
 //以iphone6为参考
 #define ScreenScaleX(x) x*[UIScreen mainScreen].bounds.size.width/375.0
@@ -65,12 +64,13 @@
         NSLog(@"说明");
         XSBIntroduceView *bivc = [[XSBIntroduceView alloc] init];
         [self.view addSubview:bivc];
-        WeakSelf(self);
+        __weak typeof(self) weakSelf = self;
         [bivc mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.left.right.equalTo(weakSelf.view);
         }];
     }else if (tag == 2){
         NSLog(@"退出");
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -102,7 +102,7 @@
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png"];
     bgImageView.image = [UIImage imageWithContentsOfFile:imagePath];
     
-    WeakSelf(self);
+    __weak typeof(self) weakSelf = self;
     [bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.right.equalTo(weakSelf.view);
     }];
@@ -160,13 +160,19 @@
         }else{
             imageName = @"icon_Breakthrought_未解锁";
         }
-        
+        [button addTarget:self action:@selector(checkpointAction:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = 100003 + i;
         [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
         
         [self.view addSubview:button];
     }
 }
 
+-(void)checkpointAction:(UIButton *)sender
+{
+    NSInteger row = sender.tag - 100003;
+    NSLog(@"当前点击第 %zd 个",row);
+}
 
 #pragma mark - Public Method
 

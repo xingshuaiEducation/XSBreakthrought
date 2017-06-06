@@ -70,6 +70,7 @@
         }];
     }else if (tag == 2){
         NSLog(@"退出");
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -159,13 +160,19 @@
         }else{
             imageName = @"icon_Breakthrought_未解锁";
         }
-        
+        [button addTarget:self action:@selector(checkpointAction:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = 100003 + i;
         [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
         
         [self.view addSubview:button];
     }
 }
 
+-(void)checkpointAction:(UIButton *)sender
+{
+    NSInteger row = sender.tag - 100003;
+    NSLog(@"当前点击第 %zd 个",row);
+}
 
 #pragma mark - Public Method
 
