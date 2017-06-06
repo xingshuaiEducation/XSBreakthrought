@@ -11,6 +11,7 @@
 #import "XSBreakthroughtModel.h"
 #import "XSBIntroduceView.h"
 #import "XSBreakthroughtManager.h"
+#import "XSBreakthroughtUtil.h"
 
 //以iphone6为参考
 #define ScreenScaleX(x) x*[UIScreen mainScreen].bounds.size.width/375.0
@@ -64,7 +65,7 @@
         NSLog(@"说明");
         XSBIntroduceView *bivc = [[XSBIntroduceView alloc] init];
         [self.view addSubview:bivc];
-        __weak typeof(self) weakSelf = self;
+        WeakSelf(self);
         [bivc mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.left.right.equalTo(weakSelf.view);
         }];
@@ -101,7 +102,7 @@
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png"];
     bgImageView.image = [UIImage imageWithContentsOfFile:imagePath];
     
-    __weak typeof(self) weakSelf = self;
+    WeakSelf(self);
     [bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.right.equalTo(weakSelf.view);
     }];
