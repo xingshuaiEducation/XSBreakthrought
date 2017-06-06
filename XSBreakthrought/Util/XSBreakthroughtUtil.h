@@ -14,6 +14,6 @@
 #define ScreenScaleX(x) x*[UIScreen mainScreen].bounds.size.width/375.0
 #define ScreenScaleY(y) y*[UIScreen mainScreen].bounds.size.height/667.0
 
-#define WeakSelf(self) __weak typeof(self) weakSelf = self;
+#define WeakSelf(self) __unsafe_unretained typeof(self) weakSelf = self;
 
 @end
